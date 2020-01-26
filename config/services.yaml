@@ -19,9 +19,19 @@ services:
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
-    App\Controller\:
-        resource: '../src/Controller'
+    App\Infrastructure\Framework\Symfony\Controller\:
+        resource: '../src/Infrastructure/Framework/Symfony/Controller'
         tags: ['controller.service_arguments']
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Infrastructure\Persistence\Doctrine\DoctrineProductRepository: ~
+    App\Infrastructure\Persistence\InMemory\InMemoryProductRepository: ~
+    App\Infrastructure\Persistence\Remote\RemoteProductRepository: ~
+
+    App\Domain\Model\Product\ProductRepository: '@App\Infrastructure\Persistence\Remote\RemoteProductRepository'
+
+    App\Infrastructure\Framework\Symfony\Command\GetProductsCommand:
+        tags:
+            - { name: 'console.command', command: 'app:get-products' }

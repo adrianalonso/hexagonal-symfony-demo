@@ -1,3 +1,10 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+
+create_product:
+    path: /products
+    methods: POST
+    controller: App\Infrastructure\Framework\Symfony\Controller\ProductController::createProduct
+
+get_products:
+    path: /products
+    methods: GET
+    controller: App\Infrastructure\Framework\Symfony\Controller\ProductController::listProducts
